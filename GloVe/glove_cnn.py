@@ -1,4 +1,18 @@
 import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+import pandas as pd
+
+"""
+load training and test data from file. Return test/train datasets.
+Make the entire sentences lower cased as the GloVe models vector is uncased.
+"""
+def loadData(fname, train_size = 5000, test_size = 500):
+    print('loading training and test data sets from: ',fname)
+    df = pd.read_csv(fname, delimiter=',', nrows=train_size+test_size)
+    dataset = [(str(x[5]).lower(), int(x[0])) for x in df.values]
+
 
 """
 Load pretrained GloVe model into a word -> vector dictionary.
@@ -19,10 +33,10 @@ def loadGlove(fname):
     return mapping
 
 def main():
-    fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.50d.txt'
-    mapping = loadGlove(fname)
-    print(mapping['hi'])
-    print(mapping['hello'])
+    glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.50d.txt'
+    sentiment_fname = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
+    #mapping = loadGlove(fname)
+    dataset = loadData(sentiment_fname)
 
 
 if __name__ == '__main__':
