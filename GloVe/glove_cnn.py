@@ -14,6 +14,7 @@ def loadData(fname, train_size = 5000, test_size = 500):
     dataset = [(str(x[5]).lower(), int(x[0])) for x in df.values]
 
 
+
 """
 Load pretrained GloVe model into a word -> vector dictionary.
 """
