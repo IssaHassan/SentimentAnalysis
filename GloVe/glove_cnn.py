@@ -32,7 +32,7 @@ def loadData(fname, train_size = 5000, test_size = 500):
     return docs[:train_size+test_size], sentiments[:train_size+test_size]
 
 def construct_vector_data(docs, sentiments, embedding):
-    train_x = [[embedding.get(word) if word in embedding else np.zeros(25) for word in doc] for doc in docs]
+    train_x = [[embedding.get(word) if word in embedding else np.zeros(200) for word in doc] for doc in docs]
     print('Outputting first tweet ...')
     train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=100, padding='pre', truncating='pre', dtype='float')
     train_y = np.asarray([1 if x==4 else 0 for x in sentiments], dtype=np.int32)
@@ -66,10 +66,10 @@ def loadGlove(fname):
     return mapping
 
 def main():
-    glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.25d.txt'
+    glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.200d.txt'
     sentiment_fname = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
-    train_size = 1000000
-    test_size = 10000
+    train_size = 500000
+    test_size = 50000
 
     mapping = loadGlove(glove_fname)
     docs, sentiments = loadData(sentiment_fname, train_size, test_size)
@@ -88,7 +88,7 @@ def main():
     """
 
     model = tf.keras.models.Sequential()
-    keras.layers.Flatten(input_shape=(100, 25))
+    keras.layers.Flatten(input_shape=(100, 200))
     model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
     model.add(tf.keras.layers.Dropout(0.2))
     model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
@@ -101,7 +101,7 @@ def main():
 
     #model.compile(optimizer=tf.train.AdamOptimizer(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-    model.fit(train_x, train_y, epochs=6)
+    model.fit(train_x, train_y, epochs=7)
     test_results = model.evaluate(test_x, test_y)
     print("Test Accuracy: ", test_results[1]*100)
 
