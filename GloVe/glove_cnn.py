@@ -66,8 +66,8 @@ def loadGlove(fname):
     return mapping
 
 def main():
-    glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.200d.txt'
-    sentiment_fname = '/home/issahassan/project/datasets/glove_embeddings/training.1600000.processed.noemoticon.csv'
+    glove_fname = '/home/issahassan/project/datasets/glove_embeddings/glove.twitter.27B.200d.txt'
+    sentiment_fname = '/home/issahassan/project/datasets/sentiment140/training.1600000.processed.noemoticon.csv'
     train_size = 500000
     test_size = 50000
 
