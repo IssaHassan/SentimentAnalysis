@@ -52,7 +52,7 @@ Load pretrained GloVe model into a word -> vector dictionary.
 """
 def loadGlove(fname):
     print("Loading GloVe model...")
-    file = open(fname)
+    file = open(fname, encoding='utf-8')
     mapping = {}
     for line in file:
         # Seperate line by spaces to construct individual elements of the vector.
@@ -67,7 +67,7 @@ def loadGlove(fname):
 
 def main():
     glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.200d.txt'
-    sentiment_fname = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
+    sentiment_fname = '/home/issahassan/project/datasets/glove_embeddings/training.1600000.processed.noemoticon.csv'
     train_size = 500000
     test_size = 50000
 
