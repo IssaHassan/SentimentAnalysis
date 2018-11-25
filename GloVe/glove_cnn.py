@@ -1,4 +1,3 @@
-import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -32,7 +31,7 @@ def loadData(fname, train_size = 5000, test_size = 500):
     return docs[:train_size+test_size], sentiments[:train_size+test_size]
 
 def construct_vector_data(docs, sentiments, embedding):
-    train_x = [[embedding.get(word) if word in embedding else np.zeros(25) for word in doc] for doc in docs]
+    train_x = [[embedding.get(word) if word in embedding else np.zeros(25) for word in doc.lower().split()] for doc in docs]
     print('Outputting first tweet ...')
     train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=100, padding='pre', truncating='pre', dtype='float')
     train_y = np.asarray([1 if x==4 else 0 for x in sentiments], dtype=np.int32)
@@ -45,7 +44,6 @@ def construct_vector_data(docs, sentiments, embedding):
     print("train_y shape: ",train_y.shape)
     """
     return train_x, train_y
-
 
 """
 Load pretrained GloVe model into a word -> vector dictionary.
@@ -68,8 +66,8 @@ def loadGlove(fname):
 def main():
     glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.25d.txt'
     sentiment_fname = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
-    train_size = 1000000
-    test_size = 10000
+    train_size = 250000
+    test_size = 25000
 
     mapping = loadGlove(glove_fname)
     docs, sentiments = loadData(sentiment_fname, train_size, test_size)
@@ -102,6 +100,7 @@ def main():
     #model.compile(optimizer=tf.train.AdamOptimizer(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
     model.fit(train_x, train_y, epochs=6)
+    #model.fit_generator()
     test_results = model.evaluate(test_x, test_y)
     print("Test Accuracy: ", test_results[1]*100)
 
