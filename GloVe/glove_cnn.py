@@ -68,8 +68,8 @@ def loadGlove(fname):
 def main():
     glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.25d.txt'
     sentiment_fname = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
-    train_size = 100000
-    test_size = 10000
+    train_size = 50000
+    test_size = 5000
 
     #mapping = loadGlove(glove_fname)
     #docs, sentiments = loadData(sentiment_fname, train_size, test_size)
@@ -97,7 +97,7 @@ def main():
 
     #model.fit(train_x, train_y, epochs=6)
     f_glove = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.25d.txt'
-    f_data = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.unsorted.csv'
+    f_data = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
     n = 25
     e = WordEmbedding(f_glove, n)
     seq = CsvSequence(f_data, e, 10000, train_size)
