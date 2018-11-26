@@ -3,6 +3,8 @@ from tensorflow import keras
 import numpy as np
 import pandas as pd
 import math
+from word_embedding import WordEmbedding
+from csv_sequence import CsvSequence
 #np.set_printoptions(threshold=nan)
 
 """
@@ -66,26 +68,20 @@ def loadGlove(fname):
 def main():
     glove_fname = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.25d.txt'
     sentiment_fname = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.csv'
-    train_size = 250000
-    test_size = 25000
+    train_size = 100000
+    test_size = 10000
 
-    mapping = loadGlove(glove_fname)
-    docs, sentiments = loadData(sentiment_fname, train_size, test_size)
-    data_x, data_y = construct_vector_data(docs, sentiments, mapping)
-    train_x, test_x = data_x[:train_size], data_x[train_size:train_size+test_size]
-    train_y, test_y = data_y[:train_size], data_y[train_size:train_size+test_size]
+    #mapping = loadGlove(glove_fname)
+    #docs, sentiments = loadData(sentiment_fname, train_size, test_size)
+    #data_x, data_y = construct_vector_data(docs, sentiments, mapping)
+    #train_x, test_x = data_x[:train_size], data_x[train_size:train_size+test_size]
+    #train_y, test_y = data_y[:train_size], data_y[train_size:train_size+test_size]
 
-    print("Train y shape: ",train_y.shape)
-    print("Test x shape: ", test_x.shape)
-    """
-    model = keras.Sequential([
-        keras.layers.Flatten(input_shape=(100, 25)),
-        keras.layers.Dense(128, activation=tf.nn.relu),
-        keras.layers.Dense(2, activation=tf.nn.softmax)
-    ])
-    """
+    #print("Train y shape: ",train_y.shape)
+    #print("Test x shape: ", test_x.shape)
 
     model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.Dense(32, input_shape=(100, 25)))
     keras.layers.Flatten(input_shape=(100, 25))
     model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
     model.add(tf.keras.layers.Dropout(0.2))
@@ -99,10 +95,15 @@ def main():
 
     #model.compile(optimizer=tf.train.AdamOptimizer(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-    model.fit(train_x, train_y, epochs=6)
-    #model.fit_generator()
-    test_results = model.evaluate(test_x, test_y)
-    print("Test Accuracy: ", test_results[1]*100)
+    #model.fit(train_x, train_y, epochs=6)
+    f_glove = '/Users/issa/Downloads/glove.twitter.27B/glove.twitter.27B.25d.txt'
+    f_data = '/Users/issa/Downloads/trainingandtestdata/training.1600000.processed.noemoticon.unsorted.csv'
+    n = 25
+    e = WordEmbedding(f_glove, n)
+    seq = CsvSequence(f_data, e, 10000, train_size)
+    model.fit_generator(seq, epochs=5, verbose=1, use_multiprocessing=False, workers=1)
+    #test_results = model.evaluate(test_x, test_y)
+    #print("Test Accuracy: ", test_results[1]*100)
 
 
 
