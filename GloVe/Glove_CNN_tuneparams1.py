@@ -72,8 +72,8 @@ def loadGlove(fname):
 
 def main():
 
-    glove_fname = r'C:\Users\katie\Documents\4thYEARENGINEERING\MLSAProject\glove.twitter.27B.25d.txt'
-    sentiment_fname = r'C:\Users\katie\Documents\4thYEARENGINEERING\MLSAProject\training.1600000.processed.noemoticon.csv'
+    glove_fname = '/home/issahassan/project/datasets/glove_embeddings/glove.twitter.27B.25d.txt'
+    sentiment_fname = '/home/issahassan/project/datasets/glove_embeddings/training.1600000.processed.noemoticon.csv'
     train_size = 1584000
     test_size = 16000
 
