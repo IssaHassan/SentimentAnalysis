@@ -66,7 +66,7 @@ def loadGlove(fname):
     return mapping
 
 def main():
-    glove_fname = '/home/issahassan/project/datasets/glove_embeddings/glove.twitter.27B.200d.txt'
+    glove_fname = '/home/issahassan/project/datasets/glove_embeddings/glove.twitter.27B.25d.txt'
     sentiment_fname = '/home/issahassan/project/datasets/sentiment140/training.1600000.processed.noemoticon.csv'
     train_size = 500000
     test_size = 50000
@@ -101,7 +101,7 @@ def main():
 
     #model.compile(optimizer=tf.train.AdamOptimizer(),loss='sparse_categorical_crossentropy',metrics=['accuracy'])
 
-    model.fit(train_x, train_y, epochs=7)
+    model.fit(train_x, train_y, epochs=6)
     test_results = model.evaluate(test_x, test_y)
     print("Test Accuracy: ", test_results[1]*100)
 
