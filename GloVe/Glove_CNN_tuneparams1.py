@@ -84,8 +84,10 @@ def main():
     train_x, test_x = data_x[:train_size], data_x[train_size:train_size+test_size]
     train_y, test_y = data_y[:train_size], data_y[train_size:train_size+test_size]
 
+    print("Train x shape: ",train_x.shape)
     print("Train y shape: ",train_y.shape)
     print("Test x shape: ", test_x.shape)
+    print("Test y shape: ", test_y.shape)
     """
     model = keras.Sequential([
         keras.layers.Flatten(input_shape=(100, 25)),
@@ -99,7 +101,6 @@ def main():
     model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
     model.add(tf.keras.layers.Dropout(0.2))
     model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
-    model.add(tf.keras.layers.GRU)
     model.add(tf.keras.layers.Flatten())
     model.add(tf.keras.layers.Dense(250, activation = 'relu'))
     model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
