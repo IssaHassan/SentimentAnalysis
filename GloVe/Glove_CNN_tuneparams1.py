@@ -35,7 +35,7 @@ def loadData(fname, train_size = 5000, test_size = 500):
     return docs[:train_size+test_size], sentiments[:train_size+test_size]
 
 def construct_vector_data(docs, sentiments, embedding):
-    train_x = [[embedding.get(word) if word in embedding else np.zeros(25) for word in doc] for doc in docs]
+    train_x = [[embedding.get(word) if word in embedding else np.zeros(200) for word in doc] for doc in docs]
     print('Outputting first tweet ...')
     train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=65, padding='pre', truncating='pre')
     print('we got past train_x, onto train y...')
@@ -97,7 +97,7 @@ def main():
     """
 
     model = tf.keras.models.Sequential()
-    keras.layers.Flatten(input_shape=(100, 25))
+    keras.layers.Flatten(input_shape=(100, 200))
     model.add(tf.keras.layers.Conv1D(filters=32, kernel_size=3, padding='same', activation='relu'))
     model.add(tf.keras.layers.Dropout(0.2))
     model.add(tf.keras.layers.MaxPooling1D(pool_size=2))
