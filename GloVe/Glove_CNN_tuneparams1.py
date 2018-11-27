@@ -37,7 +37,7 @@ def loadData(fname, train_size = 5000, test_size = 500):
 def construct_vector_data(docs, sentiments, embedding):
     train_x = [[embedding.get(word) if word in embedding else np.zeros(25) for word in doc] for doc in docs]
     print('Outputting first tweet ...')
-    train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=100, padding='pre', truncating='pre')
+    train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=50, padding='pre', truncating='pre')
     print('we got past train_x, onto train y...')
     train_y = np.asarray([1 if x==4 else 0 for x in sentiments], dtype=np.int32)
     print("train_x length: ",len(train_x), ", train_y length: ",len(train_y))
