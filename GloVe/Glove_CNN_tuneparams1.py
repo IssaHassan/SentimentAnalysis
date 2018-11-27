@@ -37,7 +37,7 @@ def loadData(fname, train_size = 5000, test_size = 500):
 def construct_vector_data(docs, sentiments, embedding):
     train_x = [[embedding.get(word) if word in embedding else np.zeros(25) for word in doc] for doc in docs]
     print('Outputting first tweet ...')
-    train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=60, padding='pre', truncating='pre')
+    train_x = keras.preprocessing.sequence.pad_sequences(train_x, maxlen=55, padding='pre', truncating='pre')
     print('we got past train_x, onto train y...')
     train_y = np.asarray([1 if x==4 else 0 for x in sentiments], dtype=np.int32)
     print("train_x length: ",len(train_x), ", train_y length: ",len(train_y))
@@ -75,8 +75,8 @@ def main():
 
     glove_fname = '/home/issahassan/project/datasets/glove_embeddings/glove.twitter.27B.25d.txt'
     sentiment_fname = '/home/issahassan/project/datasets/sentiment140/training.1600000.processed.noemoticon.csv'
-    train_size = 1237500
-    test_size = 12500
+    train_size = 1000000
+    test_size = 10000
 
     mapping = loadGlove(glove_fname)
     docs, sentiments = loadData(sentiment_fname, train_size, test_size)
